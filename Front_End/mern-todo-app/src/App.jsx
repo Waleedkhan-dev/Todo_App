@@ -1,35 +1,63 @@
-import React, { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { Fragment, useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { fetchTodos, addTodo, deleteTodo, toggleTodo, } from "./features/todoSlice.js"
 
-function App() {
-  const [count, setCount] = useState(0)
 
+const App = () => {
+
+  const [text, setTex] = useState("")
+  const dispatch = useDispatch()
+  const { item, loading } = useSelector((state) => state.todo)
+
+  useEffect(() => {
+    dispatch(fetchTodos())
+  }, [dispatch])
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (text.trim()) {
+      dispatch(addTodo(text))
+      setTex("")
+    }
+  }
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <Fragment>
+
+      <div className="flex justify-center items-center">
+        <div className="flex flex-col w-[35%] ">
+          <h1 className="text-black mx-auto font-semibold">Todo List</h1>
+          <form onSubmit={handleSubmit} action="" className="flex border border-blue-100 px-3 justify-between rounded-2xl  ">
+            <input
+              onChange={(e) => setTex(e.target.value)}
+              type="text" placeholder="Enter your Todo" className="outline-none w-full" />
+            <button type="submit" className="bg-green-700 px-2 py-1 cursor-pointer rounded text-white">Add</button>
+          </form>
+          {loading ? (
+            <h1>Loading .....</h1>
+          ) : (
+            <ul>
+              {Array.isArray(item) && item.map((todo) => {
+                return <div className="bg-black text-white rounded" key={todo._id}>
+                  <li
+
+                    className={`${todo.completed ? "line-through" : "none"}`}
+                  >
+                    {todo.text}
+
+                  </li>
+                  <div className="flex justify-center items-center gap-3">
+                    <button onClick={() => dispatch(toggleTodo(todo))}>Toggle</button>
+                    <button onClick={() => dispatch(deleteTodo(todo._id))}>Delete</button>
+                  </div>
+                </div>
+              })}
+            </ul>
+          )
+          }
+        </div>
+
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </Fragment>
   )
 }
-
 export default App
