@@ -9,9 +9,11 @@ const getAllTodo = async (req, res) => {
  }
 }
 const createTodo = async (req, res) => {
+
  try {
 
   if (!req.body.text) {
+   console.log("Request Body:", req.body);
    return res.status(400).json({
     error: "text field is required"
    })
@@ -30,12 +32,12 @@ const createTodo = async (req, res) => {
 
 const updateTodo = async (req, res) => {
  try {
-  const updatedTodo = todo.findByIdAndUpdate(req.params.id
+  const updatedTodo = await todo.findByIdAndUpdate(req.params.id
    ,
    { completed: req.body.completed },
    { new: true },
-   res.json(updatedTodo)
   )
+  res.json(updatedTodo)
 
 
  } catch (error) {

@@ -14,19 +14,35 @@ server/.env
 # Logs
 logs/
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
 # OS generated files
 .DS_Store
 Thumbs.db
 
-# Editor folders
-.vscode/
+# Editor folders and files
+.vscode/*
+!.vscode/extensions.json
 .idea/
 
 # Test coverage
 coverage/
 
 # Temporary files
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+dist/
+dist-ssr/
+*.local
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# System specific files
+*.bak
+*.swp
+  
