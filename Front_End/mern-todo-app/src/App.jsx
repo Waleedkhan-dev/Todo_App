@@ -24,7 +24,7 @@ const App = () => {
     <Fragment>
 
       <div className="flex justify-center items-center">
-        <div className="flex flex-col w-[35%] ">
+        <div className="flex flex-col bg-gray-100 shadow-2xl w-[35%] ">
           <h1 className="text-black mx-auto font-semibold">Todo List</h1>
           <form onSubmit={handleSubmit} action="" className="flex border border-blue-100 px-3 justify-between rounded-2xl  ">
             <input
