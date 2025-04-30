@@ -13,11 +13,16 @@ const App = () => {
     dispatch(fetchTodos())
   }, [dispatch])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (text.trim()) {
-      dispatch(addTodo(text))
-      setTex("")
+      try {
+        await dispatch(addTodo(text)).unwrap();
+        setTex("")
+      } catch (error) {
+        console.log("failed to add task ", error);
+
+      }
     }
   }
   return (
