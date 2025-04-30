@@ -52,7 +52,7 @@ const App = () => {
                   </li>
                   <div className="flex justify-center items-center gap-3">
                     <button className="bg-blue-600 px-4 py-1 cursor-pointer rounded" onClick={() => dispatch(toggleTodo(todo))}>Toggle</button>
-                    <button className="bg-red-700 px-4 py-1 rounded" onClick={() => dispatch(deleteTodo(todo._id))}>Delete</button>
+                    <button className="bg-red-700 px-4 cursor-pointer py-1 rounded" onClick={() => dispatch(deleteTodo(todo._id))}>Delete</button>
                   </div>
                 </div>
               })}
