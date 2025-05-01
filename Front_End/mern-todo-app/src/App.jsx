@@ -5,7 +5,7 @@ import { fetchTodos, addTodo, deleteTodo, toggleTodo, } from "./features/todoSli
 
 const App = () => {
 
-  const [text, setTex] = useState("")
+  const [text, setText] = useState("")
   const dispatch = useDispatch()
   const { item, loading } = useSelector((state) => state.todo)
 
@@ -18,7 +18,7 @@ const App = () => {
     if (text.trim()) {
       try {
         await dispatch(addTodo(text)).unwrap();
-        setTex("")
+        setText("")
       } catch (error) {
         console.log("failed to add task ", error);
 
@@ -33,7 +33,8 @@ const App = () => {
           <h1 className="text-black mx-auto font-semibold">Todo List</h1>
           <form onSubmit={handleSubmit} action="" className="flex border border-blue-100 px-3 justify-between rounded-2xl  ">
             <input
-              onChange={(e) => setTex(e.target.value)}
+              value={text}
+              onChange={(e) => setText(e.target.value)}
               type="text" placeholder="Enter your Todo" className="outline-none w-full" />
             <button type="submit" className="bg-green-700 px-2 py-1 cursor-pointer rounded text-white">Add</button>
           </form>

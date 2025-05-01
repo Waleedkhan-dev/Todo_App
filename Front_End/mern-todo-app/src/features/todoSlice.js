@@ -13,13 +13,15 @@ const addTodo = createAsyncThunk("todos/addTodo", async (text) => {
 })
 
 const toggleTodo = createAsyncThunk("todos/toggletodos", async (todo) => {
-  const res = await axios.put(`http://localhost:8000/api/todos/${todo._id}`)
+  const res = await axios.put(`http://localhost:8000/api/todos/${todo._id}`, {
+    completed: !todo.completed
+  })
   return res.data
 })
 
-const deleteTodo = createAsyncThunk("todos/deleteTodo", async (id) => {
-  await axios.delete(`http://localhost:8000/api/todos/${id}`)
-  return id
+const deleteTodo = createAsyncThunk("todos/deleteTodo", async (_id) => {
+  await axios.delete(`http://localhost:8000/api/todos/${_id}`)
+  return _id
 
 })
 const todoSlice = createSlice({
@@ -40,7 +42,11 @@ const todoSlice = createSlice({
       .addCase(addTodo.fulfilled, (state, action) => {
         state.item.push(action.payload)
       })
+      .addCase(deleteTodo.fulfilled, (state, action) => {
+        state.item = state.item.filter((todo) => todo._id !== action.payload)
+        console.log("Item Deleted Successfully");
 
+      })
       .addCase(toggleTodo.fulfilled, (state, action) => {
         const index = state.item.findIndex(
           (todo) => todo._id === action.payload._id
